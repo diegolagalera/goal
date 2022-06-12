@@ -10,9 +10,14 @@ npm install
 npm run serve
 ```
 
-### run JSON-SERVER (open a terminal, access the project and run)
+### run JSON-SERVER (open a terminal, access the project and run...)
 ```
 npm run json-server
+```
+
+### Go to
+```
+http://localhost:8080
 ```
 
 ### Run your unit tests
