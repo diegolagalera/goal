@@ -1,6 +1,9 @@
+import i18n from '@/plugins/i18n'
+import store from '@/store'
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+// import HomeView from '../views/HomeView.vue'
+import Home from '../views/Index.vue'
 
 Vue.use(VueRouter)
 
@@ -8,16 +11,35 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: HomeView
+    component: Home,
+    beforeEnter: (to, from, next) => {
+      next(store.dispatch('filterTodos', i18n.t('FILTER.ALL') ))
+    },
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  }
+    path: '/all',
+    name: 'all',
+    component: Home,
+    beforeEnter: (to, from, next) => {
+      next(store.dispatch('filterTodos', i18n.t('FILTER.ALL') ))
+    },
+  },
+  {
+    path: '/active',
+    name: 'active',
+    component: Home,
+    beforeEnter: (to, from, next) => {
+      next(store.dispatch('filterTodos', i18n.t('FILTER.ACTIVE') ))
+    },
+  },
+  {
+    path: '/completed',
+    name: 'completed',
+    component: Home,
+    beforeEnter: (to, from, next) => {
+      next(store.dispatch('filterTodos', i18n.t('FILTER.COMPLETE') ))
+    },
+  },
 ]
 
 const router = new VueRouter({
