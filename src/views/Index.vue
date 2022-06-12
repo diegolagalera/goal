@@ -28,11 +28,10 @@ export default {
     watch: {
         '$store.state.todos'(newValue, oldValue) {
             // como la lista filtrada se guarda en el store al cambiar todos los objetos a otro estado se quitan de la lista y la lista se queda a 0,
-            // por este motivo si la lista esta 
-            if (newValue.length === 0 && oldValue.length !== 0) {    //como la lista filtrada se guarda en el store 
+            // por este motivo si la lista esta a 0 se hace una peticion de todos
+            if (newValue.length === 0 && oldValue.length !== 0) {
                 this.$store.dispatch('todos')
             } else if (newValue) {
-                console.log('ppppp');
                 this.checkTodos()
                 this.getTodos()
             }
@@ -40,14 +39,13 @@ export default {
     },
     methods: {
         checkTodos() {  //si no hay tareas pendientes main y footer ocultos 
-            console.log(this.$store.state.todos.length);
             if (this.$store.state.todos.length !== 0) {
                 this.show = true
             } else {
                 this.show = false
             }
         },
-        newTodo(item) {
+        newTodo(item) { //crear un todo
             let data = {
                 "title": item,
                 "completed": false
@@ -59,20 +57,16 @@ export default {
             })
         },
         getTodos() {    //filtramos los todos a mostrar
-            // var url = 'all'
-            // this.$store.dispatch('filterTodos', 'all')
-
             switch (this.$store.state.filterTodos) {
-                case 'all':
+                case this.$t('FILTER.ALL'):
                     this.todosLocal = this.$store.state.todos
                     break;
-                case 'active':
+                case this.$t('FILTER.ACTIVE'):
                     this.todosLocal = this.$store.state.todos.filter(element => element.completed === false)
                     break;
-                case 'complete':
+                case this.$t('FILTER.COMPLETE'):
                     this.todosLocal = this.$store.state.todos.filter(element => element.completed === true)
                     break;
-
                 default:
                     this.todosLocal = this.$store.state.todos
                     break;
